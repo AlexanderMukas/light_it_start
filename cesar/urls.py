@@ -7,4 +7,6 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    # mukas 11.07.2016 - Перенаправляем на app.url
+    url(r'', include('app.urls')), 
 ]

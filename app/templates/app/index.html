@@ -1,0 +1,159 @@
+{% load staticfiles %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Light IT - тестовое задание</title>
+<link rel="stylesheet" href="{% static 'css/app.css' %}">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+
+
+
+
+<content class="main">
+
+<div class="container">
+  <div class="row">
+  <h1>
+      Legend
+      
+  </h1>
+      <hr>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <textarea>
+          decode
+      </textarea>
+    </div>
+    <div class="col-sm-4">
+
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">ROT</span>
+        <input type="text" class="form-control" placeholder="Enter number" aria-describedby="basic-addon1">
+      </div>
+      
+      <button type="button" class="btn btn-default" aria-label="Left Align">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="btn btn-default" aria-label="Left Align">
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+      </button>
+
+    </div>
+    <div class="col-sm-4">
+      <textarea>
+          encode
+      </textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+        <!-- Елемент що активує процес -->
+        <a id="test" href="javascript:">Натисни мене ніжно</a>
+    </div>
+    <div class="col-sm-6" id="target">
+        <!-- Елемент, текст якого буде змінено -->
+        Я готовий до змін.
+        
+    </div>
+  </div>
+
+  <div class="row" id="chartContainer" style="height: 300px; width: 100%;">
+
+  </div>
+
+</div>
+</content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Підключаємо jQuery -->
+<script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+<!--   -->
+
+<script type="text/javascript">
+    // Магія розпочнеться лише після повного завантаження сторінки
+    $(document).ready(function () {
+        // Посилання з id="test" буде тригером події
+        $("#test").click(function() {
+            // AJAX-запит на потрібну адресу
+            $.get("/ajax_encode/", function(data) {
+                // Замінюємо текст тегу з id="target" на отримані дані
+                $("#target").html(data.var1+' '+data.var2);
+            });
+        });
+    });
+</script>
+<!-- Підключаємо Canvas.JS -->
+<script type="text/javascript">
+
+window.onload = function () {
+    var chart = new CanvasJS.Chart("chartContainer", {
+        theme: "theme2",//theme1
+        title:{
+            text: "Basic Column Chart - CanvasJS"              
+        },
+        animationEnabled: false,   // change to true
+        data: [              
+        {
+            // Change type to "bar", "area", "spline", "pie",etc.
+            type: "column",
+            dataPoints: [
+                { label: "a", y: 1  },
+                { label: "b", y: 2  },
+                { label: "c", y: 3  },
+                { label: "d", y: 4  },
+                { label: "e", y: 5  },
+                { label: "f", y: 6  },
+                { label: "g", y: 7  },
+                { label: "h", y: 8  },
+                { label: "i", y: 9  },
+                { label: "j", y: 10  },
+                { label: "k", y: 11  },
+                { label: "l", y: 12  },
+                { label: "m", y: 13  },
+                { label: "n", y: 14  },
+                { label: "o", y: 15  },
+                { label: "p", y: 16  },
+                { label: "q", y: 17  },
+                { label: "r", y: 18  },
+                { label: "s", y: 19  },
+                { label: "t", y: 20  },
+                { label: "u", y: 21  },
+                { label: "v", y: 22  },
+                { label: "w", y: 23  },
+                { label: "x", y: 24  },
+                { label: "y", y: 25  },
+                { label: "z",  y: 26  }
+            ]
+        }
+        ]
+    });
+    chart.render();
+}
+</script>
+
+
+</body>
+</html>
