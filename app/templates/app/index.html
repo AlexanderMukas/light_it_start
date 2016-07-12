@@ -28,62 +28,32 @@
   </div>
   <div class="row">
     <div class="col-sm-4">
-      <textarea>
-          decode
-      </textarea>
+      <textarea id="left_area"></textarea>
     </div>
     <div class="col-sm-4">
 
       <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">ROT</span>
-        <input type="text" class="form-control" placeholder="Enter number" aria-describedby="basic-addon1">
+        <input type="text" class="form-control" placeholder="Enter number" aria-describedby="basic-addon1" id="rotate_value" value="1">
       </div>
       
-      <button type="button" class="btn btn-default" aria-label="Left Align">
-        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-      </button>
-      <button type="button" class="btn btn-default" aria-label="Left Align">
-        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-      </button>
+      <a id="decode" href="javascript:"> Раскодировать -  </a>
+      
+    
+      <a id="encode" href="javascript:"> Закодировать </a>
 
     </div>
     <div class="col-sm-4">
-      <textarea>
-          encode
-      </textarea>
+      <textarea id="right_area"></textarea>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6">
-        <!-- Елемент що активує процес -->
-        <a id="test" href="javascript:">Натисни мене ніжно</a>
-    </div>
-    <div class="col-sm-6" id="target">
-        <!-- Елемент, текст якого буде змінено -->
-        Я готовий до змін.
-        
-    </div>
-  </div>
-
+  
   <div class="row" id="chartContainer" style="height: 300px; width: 100%;">
 
   </div>
 
 </div>
 </content>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -96,15 +66,52 @@
     // Магія розпочнеться лише після повного завантаження сторінки
     $(document).ready(function () {
         // Посилання з id="test" буде тригером події
-        $("#test").click(function() {
+        $("#encode").click(function() {
             // AJAX-запит на потрібну адресу
-            $.get("/ajax_encode/", function(data) {
+            var la = $('#left_area').val();
+            //var ra = $('#right_area').val();
+            var rot = $('#rotate_value').val();
+            $.get("/ajax_encode/", {l_area : la, rv : rot }, function(data) {
                 // Замінюємо текст тегу з id="target" на отримані дані
-                $("#target").html(data.var1+' '+data.var2);
+                //$("#target").html(data.var1+' '+data.var2 + la + ra);
+                $("#right_area").val(data.var1 + '\nROTATE = ' + data.var2); //+ data.results);
             });
         });
+
+//        $("#decode").click(function() {
+//            // AJAX-запит на потрібну адресу
+//            var ra = $('#right_area').val();
+//            var rot = $('#rotate_value').val();
+//            $.get("/ajax_decode/", {r_area : ra, rv : rot }, function(data) {
+//                // Замінюємо текст тегу з id="target" на отримані дані
+//                //$("#target").html(data.var1+' '+data.var2 + la + ra);
+//                $("#left_area").val(data.result + '\nROTATE = ' + data.ROTN); //+ data.results);
+//            });
+//        });
     });
+
 </script>
+
+<script type="text/javascript">
+    // Магія розпочнеться лише після повного завантаження сторінки
+    $(document).ready(function () {
+        // Посилання з id="test" буде тригером події
+        $("#decode").click(function() {
+            // AJAX-запит на потрібну адресу
+            var ra = $('#right_area').val();
+            var rot = $('#rotate_value').val();
+            $.get("/ajax_decode/", {r_area : ra, rv : rot }, function(data) {
+                // Замінюємо текст тегу з id="target" на отримані дані
+                //$("#target").html(data.var1+' '+data.var2 + la + ra);
+                $("#left_area").val(data.result + '\nROTATE = ' + data.ROTN); //+ data.results);
+            });
+        });
+    });  
+</script>
+
+
+
+
 <!-- Підключаємо Canvas.JS -->
 <script type="text/javascript">
 
