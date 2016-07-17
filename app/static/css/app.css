@@ -1,7 +1,4 @@
-.main {
 
-}
-/* This is a single-line comment 360px; */
 textarea {
 	width: 100% ; 
 	height: 250px;
@@ -9,19 +6,7 @@ textarea {
 .center {
 	padding: 50px 15px;
 }
-a#decode, a#encode {
-	height: 20px;
-	width: 100%;
-    color: black; /* Цвет обычной ссылки */ 
-    text-decoration: none; /* Убираем подчеркивание у ссылок */
-}
-a:visited {
-    color: black; /* Цвет посещённой ссылки */
-} 
-a:hover {
-    color: gray; /* Цвет ссылки при наведении на нее курсора мыши */  
-    /*text-decoration: underline; Добавляем подчеркивание */
-}
+
 div.buttons {
 	padding: 20px 0px;
 	text-align: center;

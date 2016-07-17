@@ -6,6 +6,8 @@
     <head>
         <meta charset="utf-8">
         <title>Light IT - тестовое задание</title>
+        <!-- Подключение JQuery 1.12 Google CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Подключение Bootstrap.min.css CDN -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <!-- Подключение Bootstrap.min.js CDN -->
@@ -13,8 +15,7 @@
         <!-- Подключение стилей app.css из проекта -->
         <link rel="stylesheet" href="{% static 'css/app.css' %}">
         <!-- Подключение JQuery 1.12 Google CDN -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <!-- Подключение Canvas.JS CDN для диаграммы -->
+        
         <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <!-- Подключение javascript app.js -->
         <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
@@ -23,10 +24,12 @@
     <body>
         <content class="main">
             <div class="container">
+                <!-- Блок Legend -->
                 <div class="row">
                     <h1>Legend</h1>
                     <hr>
                 </div>
+                <!-- Блок зашифровки-расшифровки кода Цезаря -->
                 <div class="row">
                     <div class="col-sm-5">
                         <textarea id="left_area"></textarea>
@@ -37,15 +40,37 @@
                             <input type="text" class="form-control rotn" placeholder="Enter number" aria-describedby="basic-addon1" id="rotate_value" value="1">
                         </div>
                         <div class="buttons">
-                            <button id="decode" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span></button>
-                            <button id="encode" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-right"></span></button>
+                            <button id="decode" type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left" title="Расшифрование"></span></button>
+                            <button id="encode" type="button" class="btn btn-default" title="Зашифрование"><span class="glyphicon glyphicon-arrow-right"></span></button>
                         </div>
                     </div>
                     <div class="col-sm-5">
                         <textarea id="right_area"></textarea>
                     </div>
                 </div>
+                <!-- Блок графика-диаграммы -->
                 <div class="row" id="chartContainer">
+                </div>
+                
+                <!-- Предупреждающее сообщения -->
+                <div class="row alert alert-warning" id="Alert-rotn">
+                    <!-- Кнопка для закрытия сообщения, созданная с помощью элемента <a> -->
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Warning!!!</strong> Введите смещение от 0 до 26.
+                </div>
+                <!-- Предупреждающее сообщение -->
+                <div class="row alert alert-info" id="Alert-la">
+                    <!-- Кнопка для закрытия сообщения 
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    -->
+                    <strong>Information...</strong> Тут введите текст, который нужно зашифровать.
+                </div>
+                <!-- Предупреждающее сообщение -->
+                <div class="row alert alert-info" id="Alert-ra">
+                    <!-- Кнопка для закрытия сообщения 
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    -->
+                    <strong>Information...</strong> Тут введите текст, который нужно расшифровать.
                 </div>
             </div>
         </content>

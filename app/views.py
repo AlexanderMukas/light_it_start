@@ -45,32 +45,28 @@ def ajax_encode(request):
 
 	new_string = ''
 	data = {}
-	global dict_lowc
-	global dict_uppc
-	left_side = str(request.GET['l_area'])
-	rotate = int(request.GET['rv'])
-	for i in left_side:
-		#i_low = i.lower()
-		if (i not in dict_lowc) and (i not in dict_uppc): # если такого символа нет в словаре, те. это не буква, то оставляем как есть 
-			new_string += i
-			continue
-		#else
-		if (i in dict_lowc):
-		#	new_string = get_nstr_enc(dict_lowc, i, rotate)
-			char = dict_lowc[i] + rotate
-			# получили сдвиг по символу
-			# букв в анг алфавите 26, счет с 0
-			if char > 25:
-				char = char - 26
-			new_string += get_key(dict_lowc, char)
-		elif (i in dict_uppc):
-		#	new_string = get_nstr_enc(dict_uppc, i, rotate)
-			char = dict_uppc[i] + rotate
-			# получили сдвиг по символу
-			# букв в анг алфавите 26, счет с 0
-			if char > 25:
-				char = char - 26
-			new_string += get_key(dict_uppc, char)
+	if request.method == 'GET':
+		left_side = str(request.GET['l_area'])
+		rotate = int(request.GET['rv'])
+		for i in left_side:
+			if (i not in dict_lowc) and (i not in dict_uppc): # если такого символа нет в словаре, те. это не буква, то оставляем как есть 
+				new_string += i
+				continue
+			#else
+			if (i in dict_lowc):
+				char = dict_lowc[i] + rotate
+				# получили сдвиг по символу
+				# букв в анг алфавите 26, счет с 0
+				if char > 25:
+					char = char - 26
+				new_string += get_key(dict_lowc, char)
+			elif (i in dict_uppc):
+				char = dict_uppc[i] + rotate
+				# получили сдвиг по символу
+				# букв в анг алфавите 26, счет с 0
+				if char > 25:
+					char = char - 26
+				new_string += get_key(dict_uppc, char)
 
 	data['result'] = new_string   # добавляем в словарь для передачи 
 	return HttpResponse(json.dumps(data), content_type="application/json")
@@ -81,31 +77,31 @@ def ajax_decode(request):
 	#if request.method == 'GET':
 	#results = { 'success' : False }
 	data = {}
-	#dictionary = {chr(x): x-97 for x in range(97, 123)}
-	# получаем данные
-	right_side = str(request.GET['r_area'])
-	rotate = int(request.GET['rv'])
+	if request.method == 'GET':
+		# получаем данные
+		right_side = str(request.GET['r_area'])
+		rotate = int(request.GET['rv'])
 
-	for i in right_side:
-		if (i not in dict_lowc) and (i not in dict_uppc): # если такого символа нет в словаре, те. это не буква, то оставляем как есть 
-			new_string += i
-			continue
-		if (i in dict_lowc):
+		for i in right_side:
+			if (i not in dict_lowc) and (i not in dict_uppc): # если такого символа нет в словаре, те. это не буква, то оставляем как есть 
+				new_string += i
+				continue
+			if (i in dict_lowc):
 		#	new_string = get_nstr_dec(dict_lowc, i, rotate)
-			char = dict_lowc[i] - rotate
-			# получили сдвиг по символу
-			# букв в анг алфавите 26, счет с 0
-			if char < 0:
-				char = 26 + char
-			new_string += get_key(dict_lowc, char)
-		elif (i in dict_uppc):
+				char = dict_lowc[i] - rotate
+				# получили сдвиг по символу
+				# букв в анг алфавите 26, счет с 0
+				if char < 0:
+					char = 26 + char
+				new_string += get_key(dict_lowc, char)
+			elif (i in dict_uppc):
 		#	new_string = get_nstr_dec(dict_uppc, i, rotate)
-			char = dict_uppc[i] - rotate
-			# получили сдвиг по символу
-			# букв в анг алфавите 26, счет с 0
-			if char < 0:
-				char = 26 + char
-			new_string += get_key(dict_uppc, char)
+				char = dict_uppc[i] - rotate
+				# получили сдвиг по символу
+				# букв в анг алфавите 26, счет с 0
+				if char < 0:
+					char = 26 + char
+				new_string += get_key(dict_uppc, char)
 
 	data['result'] = new_string
 	return HttpResponse(json.dumps(data), content_type="application/json")

@@ -1,27 +1,26 @@
-// Магія розпочнеться лише після повного завантаження сторінки
+// $(document).ready - действия только полностью загруженной страницы
+// Функционал зашифровки
 $(document).ready(function () {
-    // Посилання з id="test" буде тригером події
-    $("#encode").click(function() 
-    {
-        // AJAX-запит на потрібну адресу
+    $("#encode").click(function() {
+        // AJAX-запрос на нужный адресс
         var la = $('#left_area').val();
-        //var ra = $('#right_area').val();
         var rot = $('#rotate_value').val();
+        // ссылаемся на URL , где прописано в URLs.py, далее отсылка на VIEW.PY
         $.get("/ajax_encode/", {l_area : la, rv : rot }, function(data) {
-            // Замінюємо текст тегу з id="target" на отримані дані
-            $("#right_area").val(data.result); //+ data.results);
+            // Меняем текст тега на полученные данные зашифровки
+            $("#right_area").val(data.result); 
         });
     });
 });
 
 $(document).ready(function () {
-    // Посилання з id="test" буде тригером події
     $("#decode").click(function() {
-        // AJAX-запит на потрібну адресу
+        // AJAX-запрос на нужный адресс
         var ra = $('#right_area').val();
         var rot = $('#rotate_value').val();
+        // ссылаемся на URL , где прописано в URLs.py, далее отсылка на VIEW.PY
         $.get("/ajax_decode/", {r_area : ra, rv : rot }, function(data) {
-            // Замінюємо текст тегу з id="target" на отримані дані
+            // Меняем текст тега на полученные данные расшифровки
             $("#left_area").val(data.result);
         });
     });
@@ -29,6 +28,9 @@ $(document).ready(function () {
 
 // Обработка графиков по анализу введенного текста
 $(document).ready(function () {
+    // JQuery.
+    // .keyup() - устанавливает обработчик возвращения клавиши клавиатуры..
+    // .. в ненажатое состояние, либо, запускает это событие.
 $("#left_area").keyup(function(){
     // для статистики переведем все в нижний регистр
     var pre_val = String($(this).val());
@@ -131,7 +133,9 @@ $("#left_area").keyup(function(){
     }
     if (value.match(/[z\?\<]/g)){
         v_z = value.match(/[z\?\<]/g).length;    
-    }       
+    }
+    // Переменная chart - содержит главные параметры для построения
+    // Canvas.JS графиков.       
     var chart = new CanvasJS.Chart("chartContainer", {
         title:{
             text: "# Chars in textarea"              
@@ -171,6 +175,38 @@ $("#left_area").keyup(function(){
         }
         ]
     });
+    // Сформировать график
     chart.render();
 }).keyup();
+});
+
+// События 'Alert' сообщений, которые реагируют на наведение мышки
+// на блок по значению id
+// $().show - показать элемент/блок;
+// $().hide - скрыть элемент/блок;
+$(document).ready(function(){
+    $("#Alert-rotn").hide();
+    $("#Alert-la").hide();
+    $("#Alert-ra").hide();
+    // Показ сообщения при наведении на блок .rotn
+    $(".rotn").mouseenter(function(){
+        $("#Alert-rotn").show();
+    });
+    $(".rotn").mouseleave(function(){
+        $("#Alert-rotn").hide();
+    });
+    // Показ сообщения при наведении на блок id="left_area"
+    $("#left_area").mouseenter(function(){
+        $("#Alert-la").show();
+    });
+    $("#left_area").mouseleave(function(){
+        $("#Alert-la").hide();
+    });
+    // Показ сообщения при наведении на блок id="right_area"
+    $("#right_area").mouseenter(function(){
+        $("#Alert-ra").show();
+    });
+    $("#right_area").mouseleave(function(){
+        $("#Alert-ra").hide();
+    });
 });
